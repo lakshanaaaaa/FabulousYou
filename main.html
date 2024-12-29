@@ -1,0 +1,309 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .task-label {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #fff;
+        }
+        .task-label.seminar {
+            background-color: #f0ad4e;
+        }
+        .task-label.exam {
+            background-color: #d9534f;
+        }
+        .task-label.assignment {
+            background-color: #5bc0de;
+        }
+        .task-label.task {
+            background-color: #5cb85c;
+        }
+        .task-label.discussion {
+            background-color: #337ab7;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            margin: 0;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .modal-footer button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .modal-footer .cancel-btn {
+            background-color: #d9534f;
+            color: #fff;
+        }
+        .modal-footer .confirm-btn {
+            background-color: #5cb85c;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-pink-100 min-h-screen flex flex-col items-center justify-center">
+    <div id="initialScreen" class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md transform transition duration-500 hover:scale-105">
+        <h1 class="text-3xl font-bold text-pink-600 mb-4 text-center">Pomodoro Planner</h1>
+        <form id="plannerForm" class="space-y-4">
+            <div>
+                <label for="studyHours" class="block text-pink-600 font-semibold mb-2">How many hours will you study today?</label>
+                <input type="number" id="studyHours" name="studyHours" class="w-full p-2 border border-pink-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-500" min="1" max="24" required>
+            </div>
+            <button type="submit" class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600 transition duration-200 transform hover:scale-105">Plan My Day</button>
+        </form>
+    </div>
+
+    <div id="scheduleScreen" class="hidden bg-white p-8 rounded-lg shadow-lg w-full max-w-md transform transition duration-500 hover:scale-105">
+        <h2 class="text-xl font-bold text-pink-600 mb-4 text-center">Your Pomodoro Schedule</h2>
+        <ul id="scheduleList" class="space-y-2"></ul>
+        <button onclick="showAssignmentSchedule()" class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600 transition duration-200 transform hover:scale-105 mt-4">Go to Assignment Schedule</button>
+    </div>
+
+    <div id="pomodoroTimer" class="fixed inset-0 bg-pink-100 bg-opacity-90 flex items-center justify-center hidden">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md text-center">
+            <h2 class="text-2xl font-bold text-pink-600 mb-4">Pomodoro Timer</h2>
+            <div id="timerDisplay" class="text-4xl font-bold text-pink-600 mb-4">25:00</div>
+            <button id="startTimer" class="bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600 transition duration-200 transform hover:scale-105">Start</button>
+            <button id="completeSession" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 transform hover:scale-105 mt-4 hidden">Complete Session</button>
+        </div>
+    </div>
+
+    <div id="assignmentSchedule" class="hidden bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl transform transition duration-500 hover:scale-105">
+        <div class="header">
+            <div>
+                <div class="breadcrumbs">
+                    <i class="fas fa-home"></i> School / Assignment schedule
+                </div>
+                <h1>Assignment schedule</h1>
+            </div>
+            <div class="actions">
+                <i class="fas fa-filter"></i>
+                <i class="fas fa-sort"></i>
+                <i class="fas fa-search"></i>
+                <button class="new-button" onclick="openModal()">New <i class="fas fa-caret-down"></i></button>
+            </div>
+        </div>
+        <div class="table-container mt-4">
+            <table id="assignmentTable" class="w-full border-collapse">
+                <thead>
+                    <tr>
+                        <th class="border-b p-2">Status</th>
+                        <th class="border-b p-2">Course</th>
+                        <th class="border-b p-2">Task</th>
+                        <th class="border-b p-2">Dates</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be added here dynamically -->
+                </tbody>
+            </table>
+        </div>
+        <button onclick="showPomodoroPlanner()" class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600 transition duration-200 transform hover:scale-105 mt-4">Back to Pomodoro Planner</button>
+    </div>
+
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>New Assignment</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="assignmentForm">
+                    <label for="course">Course:</label>
+                    <input type="text" id="course" name="course" required><br><br>
+                    <label for="task">Task:</label>
+                    <select id="task" name="task" required>
+                        <option value="seminar">Seminar</option>
+                        <option value="exam">Exam</option>
+                        <option value="assignment">Assignment</option>
+                        <option value="task">Task</option>
+                        <option value="discussion">Discussion Post</option>
+                    </select><br><br>
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required><br><br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+                <button class="confirm-btn" onclick="addAssignment()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="alarmSound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+    <script>
+        document.getElementById('plannerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const studyHours = parseInt(document.getElementById('studyHours').value);
+            const pomodoroSessions = studyHours * 2; // 1 hour = 2 Pomodoro sessions (25 min work + 5 min break)
+            const scheduleList = document.getElementById('scheduleList');
+            scheduleList.innerHTML = '';
+
+            for (let i = 1; i <= pomodoroSessions; i++) {
+                const listItem = document.createElement('li');
+                listItem.className = 'bg-pink-200 p-4 rounded shadow transform transition duration-500 hover:scale-105 cursor-pointer';
+                listItem.textContent = `Pomodoro Session ${i}: 25 minutes work + 5 minutes break`;
+                listItem.addEventListener('click', function() {
+                    startPomodoroTimer(listItem);
+                });
+                scheduleList.appendChild(listItem);
+            }
+
+            document.getElementById('initialScreen').classList.add('hidden');
+            document.getElementById('scheduleScreen').classList.remove('hidden');
+        });
+
+        function startPomodoroTimer(listItem) {
+            document.getElementById('pomodoroTimer').classList.remove('hidden');
+            let timerDisplay = document.getElementById('timerDisplay');
+            let startTimerButton = document.getElementById('startTimer');
+            let completeSessionButton = document.getElementById('completeSession');
+            let timer;
+            let timeLeft = 25 * 60; // 25 minutes in seconds
+            let isWorkSession = true;
+
+            startTimerButton.addEventListener('click', function() {
+                startTimerButton.classList.add('hidden');
+                completeSessionButton.classList.remove('hidden');
+                timer = setInterval(function() {
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        document.getElementById('alarmSound').play();
+                        if (isWorkSession) {
+                            timerDisplay.textContent = "00:00";
+                            setTimeout(() => {
+                                alert("Time for a 5-minute break!");
+                                timeLeft = 5 * 60; // 5 minutes in seconds
+                                isWorkSession = false;
+                                startTimerButton.classList.remove('hidden');
+                                completeSessionButton.classList.add('hidden');
+                                timerDisplay.textContent = "05:00";
+                            }, 1000);
+                        } else {
+                            timerDisplay.textContent = "00:00";
+                            setTimeout(() => {
+                                alert("Break over! Time to start the next session.");
+                                listItem.classList.add('bg-green-200');
+                                document.getElementById('pomodoroTimer').classList.add('hidden');
+                                startTimerButton.classList.remove('hidden');
+                                completeSessionButton.classList.add('hidden');
+                                timerDisplay.textContent = "25:00";
+                            }, 1000);
+                        }
+                    } else {
+                        timeLeft--;
+                        let minutes = Math.floor(timeLeft / 60);
+                        let seconds = timeLeft % 60;
+                        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    }
+                }, 1000);
+            });
+
+            completeSessionButton.addEventListener('click', function() {
+                clearInterval(timer);
+                listItem.classList.add('bg-green-200');
+                document.getElementById('pomodoroTimer').classList.add('hidden');
+                startTimerButton.classList.remove('hidden');
+                completeSessionButton.classList.add('hidden');
+                timerDisplay.textContent = "25:00";
+            });
+        }
+
+        function showAssignmentSchedule() {
+            document.getElementById('scheduleScreen').classList.add('hidden');
+            document.getElementById('assignmentSchedule').classList.remove('hidden');
+        }
+
+        function showPomodoroPlanner() {
+            document.getElementById('assignmentSchedule').classList.add('hidden');
+            document.getElementById('scheduleScreen').classList.remove('hidden');
+        }
+
+        function openModal() {
+            document.getElementById('confirmationModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+
+        function addAssignment() {
+            const course = document.getElementById('course').value;
+            const task = document.getElementById('task').value;
+            const date = document.getElementById('date').value;
+
+            const taskLabelClass = {
+                seminar: 'seminar',
+                exam: 'exam',
+                assignment: 'assignment',
+                task: 'task',
+                discussion: 'discussion'
+            };
+
+            const table = document.getElementById('assignmentTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            const statusCell = newRow.insertCell(0);
+            const courseCell = newRow.insertCell(1);
+            const taskCell = newRow.insertCell(2);
+            const dateCell = newRow.insertCell(3);
+
+            statusCell.innerHTML = '<input type="checkbox">';
+            courseCell.className = 'course';
+            courseCell.innerText = course;
+            taskCell.innerHTML = `<span class="task-label ${taskLabelClass[task]}">${task.charAt(0).toUpperCase() + task.slice(1)}</span>`;
+            dateCell.innerText = date;
+
+            closeModal();
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('confirmationModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

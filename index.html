@@ -1,0 +1,370 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   The Fabulous Clone
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+  <style>
+    
+   body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-repeat: no-repeat;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            float: left;
+        }
+        .logo img {
+            height: 40px;
+        }
+        nav {
+            float: right;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 700;
+        }
+        .hero {
+            background: url('https://i.pinimg.com/736x/e9/76/c8/e976c859ab1e2e0b4d6cc3942d275ad7.jpg') no-repeat center center/cover;
+            height: 111vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+        .hero a {
+            background-color: #645d5c;
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+        }
+        .features {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .features h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+        .feature-item {
+            display: inline-block;
+            width: 30%;
+            margin: 0 1.5%;
+            vertical-align: top;
+        }
+        .feature-item img {
+            width: 100px;
+            height: 100px;
+        }
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        .feature-item p {
+            font-size: 1rem;
+            color: #666;
+        }
+        .cta {
+            background-color: #4e4848;
+            color: #fff;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .cta a {
+            background-color: #fff;
+            color: #474242;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        footer p {
+            margin: 0;
+        }
+        
+        body {
+            background-color: rgb(183, 166, 186);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.pinimg.com/736x/4e/bc/7c/4ebc7ce2e5768c504ab4577a0bb89c66.jpg');
+            background-repeat:flex;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 150px;
+            width: 250px;
+            border-radius: 25px;
+        }
+        .logo span {
+            margin-left: 8px;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .nav a {
+            margin-left: 16px;
+            color: #4b5563;
+            text-decoration: none;
+        }
+        .nav a:hover {
+            color: #1f2937;
+        }
+        .main-content {
+            padding: 64px 16px;
+        }
+        .main-content h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6d28d9;
+        }
+        .main-content p {
+            font-size: 1.125rem;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+        .cards {
+            margin-top: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+        @media (min-width: 768px) {
+            .cards {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+        .card {
+            background-color: white;
+            border-radius: 9999px;
+            padding: 32px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 320px;
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .yellow-card {
+            background-color: #fef3c7;
+        }
+        .card img {
+            height: 96px;
+            width: 96px;
+            margin-bottom: 16px;
+        }
+        .card p {
+            color: #6b7280;
+        }
+        .cta-button {
+            margin-top: 48px;
+            background-color: #f97316;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 9999px;
+            border: none;
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            background-color: #ea580c;
+        }
+        .text-purple-600{
+            width: 300px;
+        }
+        .find a {
+            background-color: #8d7590;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+        }
+        
+  </style>
+ </head>
+ <body >
+  <header>
+   <div class="container">
+    <div class="logo">
+     <img alt="The Fabulous logo with a stylized 'F' and vibrant colors" height="250" src="FABULOUS YOU.png" width="500"/>
+    </div>
+    <nav>
+     <ul>
+      <li>
+       <a href="#">
+        Home
+       </a>
+      </li>
+      <li>
+       <a href="#">
+        Features
+       </a>
+      </li>
+      <li>
+       <a href="#">
+        Testimonials
+       </a>
+      </li>
+      <li>
+       <a href="#">
+        Contact
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <section class="hero">
+   <div class="container">
+    <h1>
+     Welcome to The FabulousYOU
+    </h1>
+    <p>
+     Your journey to a better life starts here.
+    </p>
+    <a href="#">
+     Get Started
+    </a>
+   </div>
+  </section>
+  <section class="features">
+   <div class="container">
+    <h2>
+     Features
+    </h2>
+    <div class="feature-item">
+     <img alt="Icon representing habit tracking with a calendar and checkmarks" height="100" src="https://storage.googleapis.com/a1aa/image/Mbzv6a0piEI2LREkRvibIw4IOGwp9ecFYeXnQ4L7RBj9BAenA.jpg" width="100"/>
+     <h3>
+      Habit Tracking
+     </h3>
+     <p>
+      Track your daily habits and routines to build a better you.
+     </p>
+    </div>
+    <div class="feature-item">
+     <img alt="Icon representing personalized coaching with a coach figure" height="100" src="https://storage.googleapis.com/a1aa/image/eDfLXVwAgVj9tkrnCQI707vmFeTGTJggIsUMcwSmssCzDA8nA.jpg" width="100"/>
+     <h3>
+      Personalized Coaching
+     </h3>
+     <p>
+      Receive personalized coaching to help you achieve your goals.
+     </p>
+    </div>
+    <div class="feature-item">
+     <img alt="Icon representing progress tracking with a graph and upward arrow" height="100" src="https://storage.googleapis.com/a1aa/image/1JVeuurlzRVNGqtB9nnIFQrNFUA4n4F4lU54Wa4eYIb3BAenA.jpg" width="100"/>
+     <h3>
+      Progress Tracking
+     </h3>
+     <p>
+      Monitor your progress and stay motivated on your journey.
+     </p>
+    </div>
+   </div>
+  </section>
+  <main class="py-16">
+    <h1 class="text-3xl font-bold text-purple-800">
+     The science of Fabulous
+    </h1>
+    <div class="mt-12 flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8">
+        <center>
+     <!-- First Card -->
+     <div class="bg-white rounded-full p-8 shadow-lg w-80 h-80 flex flex-col items-center justify-center">
+      <img alt="Person hiking with sun and mountains" class="h-24 w-24 mb-4" height="100" src="https://www.thefabulous.co/images/Fab_Home_Icon-1_Science_Desktop.png" width="100"/>
+      <p style="align-content: center;" class="text-purple-600">
+        Fabulous is a behavior change solution that began at Duke University’s Center for Advanced Hindsight.
+      </p>
+     </div>
+     <!-- Second Card -->
+     <div class="bg-yellow-100 rounded-full p-8 shadow-lg w-80 h-80 flex flex-col items-center justify-center">
+      <img alt="Open book with science equipment" class="h-24 w-24 mb-4" height="100" src="https://www.thefabulous.co/images/Fab_Home_Icon-2_Science_Desktop.png" width="100"/>
+      <p style="align-content: center;" class="text-purple-600">
+       Our team of behavioral economists, psychologists, and data scientists are constantly improving Fabulous and finding new ways to share the benefits with more people.
+      </p>
+     </div>
+     <!-- Third Card -->
+     <div class="bg-white rounded-full p-8 shadow-lg w-80 h-80 flex flex-col items-center justify-center">
+      <img alt="Scientist with lab equipment" class="h-24 w-24 mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/FhzCQhJ2hS5ZLNve5rDiVWKvBE4knH70e1y3BuG5Efy4fB4PB.jpg" width="100"/>
+      <p style="align-content: center;" class="text-purple-600">
+            We have helped 37M people build healthier and happier lives
+      </p>
+     </div>
+    
+    </div>
+    <section class="find">
+    <a href="#">
+     Find out more
+    </a>
+</section>
+</center>
+  <section class="cta">
+   <div class="container">
+    <h2>
+     Ready to Start Your Journey?
+    </h2>
+    <a href="#">
+     Join Now
+    </a>
+   </div>
+  </section>
+  
+ </body>
+</html>
